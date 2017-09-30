@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gionee.salesinfosystem.dao.CountryDao" >
+  <resultMap id="BaseResultMap" type="com.gionee.salesinfosystem.bean.Country" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="modifytime" property="modifytime" jdbcType="TIMESTAMP" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="agentsinfourl" property="agentsinfourl" jdbcType="VARCHAR" />
+    <result column="productinfourl" property="productinfourl" jdbcType="VARCHAR" />
+    <result column="producttypeurl" property="producttypeurl" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, name, code,createtime, modifytime, description, agentsinfourl, productinfourl, producttypeurl
+  </sql>
+  
+  <select id="list" resultMap="BaseResultMap">
+   select 
+    <include refid="Base_Column_List" />
+    from tbl_country
+    <if test="id!=null">
+     where id = #{id,jdbcType=BIGINT}
+    </if>
+  </select>
+  
+   <!-- 查询国家记录总数-->
+   <select id="queryCountryCount" resultType="java.lang.Integer" parameterType="java.lang.String">
+      select count(*) from tbl_country 
+      <where>
+       <if test="name!=null">
+          name like concat('%',#{name},'%')
+       </if>
+    </where>
+  </select>
+  
+  <!-- 查询国家信息(分页) -->
+  <select id="queryCountryInfo" resultMap="BaseResultMap" parameterType="com.gionee.salesinfosystem.bean.Country" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_country
+    <where>
+       <if test="name!=null">
+          name like concat('%',#{name},'%')
+       </if>
+    </where>
+    order by createtime desc,modifytime desc limit #{beginIndex},#{everyPage}
+  </select>
+  
+  <!-- 询所有国家信息 -->
+  <select id="queryCountryList" resultMap="BaseResultMap">
+   select 
+    <include refid="Base_Column_List" />
+    from tbl_country
+    order by name ASC
+  </select>
+   <!-- 询所有国家 -->
+  <select id="queryCountryListByName" resultMap="BaseResultMap">
+   select 
+    <include refid="Base_Column_List" />
+    from tbl_country
+    where name = #{name,jdbcType=VARCHAR}
+  </select>
+  <!-- 国家增加时校验国家名称的唯一性 -->
+  <select id="checkCountryNameUniqueForAdd" resultType="INTEGER">
+    select  count(*) from tbl_country
+    where name = #{name,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 国家编辑时校验国家名称的唯一性 -->
+  <select id="checkCountryNameUniqueForUpdate" resultType="INTEGER">
+    select  count(*) from tbl_country
+    where name = #{name,jdbcType=VARCHAR} and name!= #{originName,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 增加国家 -->
+  <insert id="addCountry" parameterType="com.gionee.salesinfosystem.bean.Country" >
+    insert into tbl_country
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="modifytime != null" >
+        modifytime,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="agentsinfourl != null" >
+        agentsinfourl,
+      </if>
+      <if test="productinfourl != null" >
+        productinfourl,
+      </if>
+      <if test="producttypeurl != null" >
+        producttypeurl,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifytime != null" >
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="agentsinfourl != null" >
+        #{agentsinfourl,jdbcType=VARCHAR},
+      </if>
+      <if test="productinfourl != null" >
+        #{productinfourl,jdbcType=VARCHAR},
+      </if>
+      <if test="producttypeurl != null" >
+        #{producttypeurl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <!-- 更新国家信息 -->
+  <update id="updateCountryInfo" parameterType="com.gionee.salesinfosystem.bean.Country" >
+    update tbl_country
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+       <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifytime != null" >
+        modifytime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="agentsinfourl != null" >
+        agentsinfourl = #{agentsinfourl,jdbcType=VARCHAR},
+      </if>
+      <if test="productinfourl != null" >
+        productinfourl = #{productinfourl,jdbcType=VARCHAR},
+      </if>
+      <if test="producttypeurl != null" >
+        producttypeurl = #{producttypeurl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <!-- 删除国家 -->
+  <delete id="deleteCountryById" parameterType="java.lang.Long" >
+    delete from tbl_country
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+</mapper>

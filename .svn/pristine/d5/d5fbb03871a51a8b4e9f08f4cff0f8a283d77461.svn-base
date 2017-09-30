@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+   <parent>
+    <groupId>chenyee.common</groupId>
+  	<artifactId>chenyee-common</artifactId>
+  	<version>1.0-SNAPSHOT</version>
+  </parent>
+  
+  <groupId>com.chenyee.salestracksystem</groupId>
+  <artifactId>salestracksystem</artifactId>
+  <packaging>pom</packaging>
+  
+   <properties>
+    	 <!--定义需要引用的基础jar包版本 -->
+	   	<chenyee-common-core.version>1.0-SNAPSHOT</chenyee-common-core.version>
+	   	<chenyee-common-service.version>1.0-SNAPSHOT</chenyee-common-service.version>
+	   	<chenyee-common-web.version>1.0-SNAPSHOT</chenyee-common-web.version>
+	   	
+   </properties>
+  
+  <modules>
+    <module>salestracksystem-common-facade</module>
+    <module>salestracksystem-common-service</module>
+    <module>salestracksystem-common-web</module>
+  </modules>
+  
+  <dependencyManagement>
+  	<dependencies>
+	  	<dependency>
+	     	  <groupId>chenyee.common</groupId>
+			  <artifactId>chenyee-common-core</artifactId>
+			  <version>${chenyee-common-core.version}</version>
+	    </dependency>
+  		<dependency>
+	    	<groupId>chenyee.common</groupId>
+			  <artifactId>chenyee-common-service</artifactId>
+			 <version>${chenyee-common-service.version}</version>
+	   </dependency>
+	   
+	   <dependency>
+	    	<groupId>chenyee.common</groupId>
+			  <artifactId>chenyee-common-web</artifactId>
+			 <version>${chenyee-common-web.version}</version>
+	   </dependency>
+	  
+	  <dependency>
+	    	<groupId>com.chenyee.salestracksystem</groupId>
+			  <artifactId>salestracksystem-common-facade</artifactId>
+			  <version>1.0-SNAPSHOT</version>
+	   </dependency> 
+	  
+  	</dependencies>
+  </dependencyManagement>
+</project>
